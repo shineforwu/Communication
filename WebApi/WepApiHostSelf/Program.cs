@@ -14,7 +14,7 @@ namespace WepApiHostSelf
         {
             try
             {
-                var config = new HttpSelfHostConfiguration("http://0.0.0.0:8889");
+                var config = new HttpSelfHostConfiguration("http://0.0.0.0:9999");
                 config.Routes.MapHttpRoute(
                     "API Default", "api/{controller}/{Action}",
                     new { id = RouteParameter.Optional });
