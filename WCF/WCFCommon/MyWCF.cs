@@ -29,10 +29,54 @@ namespace WCFCommon
             }
         }
 
+        public ServiceHost StartWCFByPipe(string hostAddress, Type serviceType, Type implementedContract)
+        {
+            try
+            {
+                Uri baseAddress = new Uri("net.pipe://" + hostAddress +"/");
+                ServiceHost host = new ServiceHost(serviceType, baseAddress);
+                NetNamedPipeBinding bind = new NetNamedPipeBinding();
+                bind.TransferMode = TransferMode.Buffered;
+                bind.MaxReceivedMessageSize = int.MaxValue;
+                //bind.ReaderQuotas.MaxDepth = 6553500;
+                //bind.ReaderQuotas.MaxBytesPerRead = 6553500;
+                //bind.ReaderQuotas.MaxNameTableCharCount = 6553500;
+                //bind.ReaderQuotas.MaxStringContentLength = int.MaxValue;
+                bind.ReceiveTimeout = TimeSpan.MaxValue;
+                bind.OpenTimeout = TimeSpan.MaxValue;
+                bind.SendTimeout = TimeSpan.MaxValue;
+                host.AddServiceEndpoint(implementedContract, bind, baseAddress);
+                host.Open();
+                return host;
+            }
+            catch (Exception ex)
+            {
+                EventPrint?.Invoke(ex.Message);
+                return null;
+            }
+        }
+
         public Object GetWcfChannel<T>(string hostAddress, int port)
         {
             EndpointAddress edpHttp = new EndpointAddress("http://" + hostAddress + ":" + port + "/");
             WSHttpBinding bind = new WSHttpBinding(SecurityMode.None);
+            ChannelFactory<T> factory = new ChannelFactory<T>(bind);
+            T channel = factory.CreateChannel(edpHttp);
+            return channel;
+        }
+        public Object GetWcfChannelByPipe<T>(string hostAddress)
+        {
+            EndpointAddress edpHttp = new EndpointAddress("net.pipe://" + hostAddress +  "/");
+            NetNamedPipeBinding bind = new NetNamedPipeBinding();
+            bind.TransferMode = TransferMode.Buffered;
+            bind.MaxReceivedMessageSize = int.MaxValue;
+            //bind.ReaderQuotas.MaxDepth = 6553500;
+            //bind.ReaderQuotas.MaxBytesPerRead = 6553500;
+            //bind.ReaderQuotas.MaxNameTableCharCount = 6553500;
+            //bind.ReaderQuotas.MaxStringContentLength = int.MaxValue;
+            bind.ReceiveTimeout = TimeSpan.MaxValue;
+            bind.OpenTimeout = TimeSpan.MaxValue;
+            bind.SendTimeout = TimeSpan.MaxValue;
             ChannelFactory<T> factory = new ChannelFactory<T>(bind);
             T channel = factory.CreateChannel(edpHttp);
             return channel;

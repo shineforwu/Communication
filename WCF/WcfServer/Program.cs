@@ -15,7 +15,8 @@ namespace WcfServer
             MyWCF myWCF = new MyWCF();
             myWCF.EventPrint += Write;
 
-            ServiceHost host = myWCF.StartWCF("127.0.0.1", 6666,typeof(Test),typeof(ITest));
+            //ServiceHost host = myWCF.StartWCF("127.0.0.1", 6666,typeof(Test),typeof(ITest));
+            ServiceHost host = myWCF.StartWCFByPipe("127.0.0.1", typeof(Test), typeof(ITest));
             System.Console.ReadKey();
         }
 
