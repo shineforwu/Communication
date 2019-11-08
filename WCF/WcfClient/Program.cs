@@ -12,13 +12,28 @@ namespace WcfClient
     {
         static void Main(string[] args)
         {
+            RunAsInsperctor();
+            //Run();
+            System.Console.ReadKey();
+        }
+        static void Run()
+        {
             MyWCF myWCF = new MyWCF();
-            //ITest channel =(ITest) myWCF.GetWcfChannel<ITest>("127.0.0.1", 6666);
-            ITest channel = (ITest)myWCF.GetWcfChannelByPipe<ITest>("127.0.0.1");
-
-            for (int i=0;i<10;i++)
+            ITest channel = (ITest)myWCF.GetWcfChannel<ITest>("127.0.0.1", 6666);
+            for (int i = 0; i < 10; i++)
             {
-                channel.Fun1("Hi:"+i.ToString());
+                channel.Fun1("Hi:" + i.ToString());
+                Thread.Sleep(1000);
+            }
+        }
+
+        static void RunAsInsperctor()
+        {
+            MyWCF myWCF = new MyWCF();
+            ITest channel = (ITest)myWCF.GetWcfChannelByPipe<ITest>("127.0.0.1");
+            for (int i = 0; i < 10; i++)
+            {
+                channel.Fun1("Hi:" + i.ToString());
                 Thread.Sleep(1000);
             }
         }

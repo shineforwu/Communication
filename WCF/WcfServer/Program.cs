@@ -12,13 +12,27 @@ namespace WcfServer
     {
         public static void Main(string[] args)
         {
-            MyWCF myWCF = new MyWCF();
-            myWCF.EventPrint += Write;
-
-            //ServiceHost host = myWCF.StartWCF("127.0.0.1", 6666,typeof(Test),typeof(ITest));
-            ServiceHost host = myWCF.StartWCFByPipe("127.0.0.1", typeof(Test), typeof(ITest));
+            //Run();
+            RunAsInsperctor();
             System.Console.ReadKey();
         }
+        static void Run()
+        {
+            MyWCF myWCF = new MyWCF();
+            myWCF.EventPrint += Write;
+            ServiceHost host = myWCF.StartWCF("127.0.0.1", 6666,typeof(Test),typeof(ITest));
+            System.Console.ReadKey();
+        }
+        static void RunAsInsperctor()
+        {
+
+            MyWCF myWCF = new MyWCF();
+            myWCF.EventPrint += Write;
+            ServiceHost host = myWCF.StartWCFByPipe("127.0.0.1", typeof(Test), typeof(ITest));
+            
+        }
+
+
 
         public static void Write(string str)
         {

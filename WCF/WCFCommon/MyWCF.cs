@@ -19,6 +19,10 @@ namespace WCFCommon
                 Uri baseAddress = new Uri("http://" + hostAddress + ":" + port + "/");
                 ServiceHost host = new ServiceHost(serviceType, baseAddress);
                 host.AddServiceEndpoint(implementedContract, new WSHttpBinding(SecurityMode.None), baseAddress);
+                //foreach (var endpont in host.Description.Endpoints)
+                //{
+                //    endpont.EndpointBehaviors.Add(new ImplementBehaviorAttribute());
+                //}
                 host.Open();
                 return host;
             }
@@ -33,19 +37,24 @@ namespace WCFCommon
         {
             try
             {
-                Uri baseAddress = new Uri("net.pipe://" + hostAddress +"/");
+                Uri baseAddress = new Uri("net.pipe://" + hostAddress + "/Name/");
                 ServiceHost host = new ServiceHost(serviceType, baseAddress);
                 NetNamedPipeBinding bind = new NetNamedPipeBinding();
-                bind.TransferMode = TransferMode.Buffered;
-                bind.MaxReceivedMessageSize = int.MaxValue;
+                //bind.TransferMode = TransferMode.Buffered;
+                //bind.MaxReceivedMessageSize = int.MaxValue;
                 //bind.ReaderQuotas.MaxDepth = 6553500;
                 //bind.ReaderQuotas.MaxBytesPerRead = 6553500;
                 //bind.ReaderQuotas.MaxNameTableCharCount = 6553500;
                 //bind.ReaderQuotas.MaxStringContentLength = int.MaxValue;
-                bind.ReceiveTimeout = TimeSpan.MaxValue;
-                bind.OpenTimeout = TimeSpan.MaxValue;
-                bind.SendTimeout = TimeSpan.MaxValue;
+                //bind.ReceiveTimeout = TimeSpan.MaxValue;
+                //bind.OpenTimeout = TimeSpan.MaxValue;
+                //bind.SendTimeout = TimeSpan.MaxValue;
                 host.AddServiceEndpoint(implementedContract, bind, baseAddress);
+                foreach (var endpont in host.Description.Endpoints)
+                {
+                    endpont.EndpointBehaviors.Add(new ImplementBehaviorAttribute());
+
+                }
                 host.Open();
                 return host;
             }
@@ -66,19 +75,20 @@ namespace WCFCommon
         }
         public Object GetWcfChannelByPipe<T>(string hostAddress)
         {
-            EndpointAddress edpHttp = new EndpointAddress("net.pipe://" + hostAddress +  "/");
+            EndpointAddress edpHttp = new EndpointAddress("net.pipe://" + hostAddress + "/Name/");
             NetNamedPipeBinding bind = new NetNamedPipeBinding();
-            bind.TransferMode = TransferMode.Buffered;
-            bind.MaxReceivedMessageSize = int.MaxValue;
+            //bind.TransferMode = TransferMode.Buffered;
+            //bind.MaxReceivedMessageSize = int.MaxValue;
             //bind.ReaderQuotas.MaxDepth = 6553500;
             //bind.ReaderQuotas.MaxBytesPerRead = 6553500;
             //bind.ReaderQuotas.MaxNameTableCharCount = 6553500;
             //bind.ReaderQuotas.MaxStringContentLength = int.MaxValue;
-            bind.ReceiveTimeout = TimeSpan.MaxValue;
-            bind.OpenTimeout = TimeSpan.MaxValue;
-            bind.SendTimeout = TimeSpan.MaxValue;
+            //bind.ReceiveTimeout = TimeSpan.MaxValue;
+            //bind.OpenTimeout = TimeSpan.MaxValue;
+            //bind.SendTimeout = TimeSpan.MaxValue;  
             ChannelFactory<T> factory = new ChannelFactory<T>(bind);
-            T channel = factory.CreateChannel(edpHttp);
+            factory.Endpoint.EndpointBehaviors.Add(new ImplementBehaviorAttribute());
+            T channel = factory.CreateChannel(edpHttp);    
             return channel;
         }
 
