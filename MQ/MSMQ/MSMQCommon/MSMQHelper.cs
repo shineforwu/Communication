@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Messaging;
 using System.Text;
@@ -11,6 +12,12 @@ namespace MSMQCommon
     {
         public static string ServerQueuePath { get; private set; }
         public static string ClientQueuePath { get; private set; }
+        static string queueName = "Test";
+
+        static string categoryName = "MSMQ Queue";
+        static string counterName = "Messages in Queue";
+        static string instanceName = Environment.MachineName + "\\private$\\"+ queueName;
+
 
         public static bool SetClientQueuePath(string clientQueuePath)
         {
@@ -25,6 +32,7 @@ namespace MSMQCommon
         {
             try
             {
+                queueName = queuePath;
                 string tempPath= @".\private$\" + queuePath;
                 ServerQueuePath = tempPath;
                 if (!MessageQueue.Exists(tempPath))
@@ -96,5 +104,17 @@ namespace MSMQCommon
                 Console.WriteLine(e.Message);
             }
         }
+
+        /// <summary>
+        /// Get Count only server side
+        /// </summary>
+        /// <returns></returns>
+        public static int GetCount()
+        {
+            PerformanceCounter singleCount = new PerformanceCounter(categoryName, counterName, instanceName);
+            int count = (int)singleCount.NextValue();
+            return count;
+        }
+        
     }
 }
