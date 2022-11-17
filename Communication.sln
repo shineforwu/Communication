@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29806.167
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WCF", "WCF", "{B961FE4E-04CE-40E9-812B-7D11D8C069D4}"
 EndProject
@@ -32,6 +32,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSMQCommon", "MQ\MSMQ\MSMQCommon\MSMQCommon.csproj", "{2248FF10-64F3-4CA7-A1AD-86F778F2ED29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumer", "MQ\MSMQ\Consumer\Consumer.csproj", "{8FE52809-D5B5-4CC8-8454-CF83659D73BA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SerialPort", "SerialPort", "{8A1F1FA3-DE29-402C-A1F8-F123966FA192}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerialPortCommon", "SerialPortCommon\SerialPortCommon.csproj", "{80556258-CDEF-4CDF-876B-C162AF4CCFD0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +83,10 @@ Global
 		{8FE52809-D5B5-4CC8-8454-CF83659D73BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FE52809-D5B5-4CC8-8454-CF83659D73BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FE52809-D5B5-4CC8-8454-CF83659D73BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80556258-CDEF-4CDF-876B-C162AF4CCFD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80556258-CDEF-4CDF-876B-C162AF4CCFD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80556258-CDEF-4CDF-876B-C162AF4CCFD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80556258-CDEF-4CDF-876B-C162AF4CCFD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -95,6 +103,7 @@ Global
 		{DE594C27-0898-402B-AD90-3B319A588894} = {CE0B789B-5B05-4983-8CEC-2067C55F99C0}
 		{2248FF10-64F3-4CA7-A1AD-86F778F2ED29} = {CE0B789B-5B05-4983-8CEC-2067C55F99C0}
 		{8FE52809-D5B5-4CC8-8454-CF83659D73BA} = {CE0B789B-5B05-4983-8CEC-2067C55F99C0}
+		{80556258-CDEF-4CDF-876B-C162AF4CCFD0} = {8A1F1FA3-DE29-402C-A1F8-F123966FA192}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8C810374-29FC-4734-8C41-2B45F3B0695E}
